@@ -13,7 +13,7 @@ import com.todolist.domain.ItemDto;
 @Controller
 public class HelloController {
 	
-	@GetMapping(path = {"", "hello", ""})
+	@GetMapping(path = {"", "hello"})
     public String greeting(Model model) {
         model.addAttribute("message", "HELLO WORLD");
         model.addAttribute("date", LocalDateTime.of(2018, 4, 13, 11, 12, 13));
