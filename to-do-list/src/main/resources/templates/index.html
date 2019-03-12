@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+  <head>
+    <title>To Do List</title>
+  </head>
+  <body>
+      <div th:if="!${users.size()}">
+        <p>Users are empty</p>
+      </div>
+      <table th:if="${users.size()}">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="user:${users}" th:object="${user}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{password}"></td>
+            <td th:text="*{role}"></td>
+            <td><a th:href="@{/users/{id}(id=*{id})}">Show</a></td>
+            <td><a th:href="@{/users/{id}/edit(id=*{id})}">Edit</a></td>
+            <td>
+              <form th:action="@{/users/{id}(id=*{id})}" th:method="delete">
+                <button>Destory</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </body>
+</html>
