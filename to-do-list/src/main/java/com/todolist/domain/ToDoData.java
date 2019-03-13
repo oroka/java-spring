@@ -1,14 +1,13 @@
 package com.todolist.domain;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name="to_do_list")
+//Jpaで必要
+//@Entity
+//@Table(name="to_do_list")
 public class ToDoData {
 	
 	@Id

@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
-<head>
-	<meta charset="utf-8">
-	<title>To Do List</title>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_header :: header(~{::title})">
+    <title>to do list</title>
 </head>
-<body>
-	<h1>To Do List</h1>
+<body class="bg-light">
+
+<th:block th:replace="_nav :: nav(todolist)"/>
+
+<main role="main" class="container">
+    <div class="py-5 text-center">
+        <h2>to do list</h2>
+    </div>
 	<h2>検索</h2>
 	<form th:action="@{/todolist/search}" method="post">
 		<label>Name:</label><input type="text" th:value="${username}" />
 		<label>Date:</label><input type="datetime-local" th:value="${select_time}" />
-		<input type="hidden" 
+		
 	</form>
+	
+	
+	
+</main>
+
+<th:block th:replace="_include :: basic"/>
+</body>
+</html>

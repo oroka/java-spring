@@ -2,7 +2,7 @@ package com.todolist.domain;
 
 import javax.persistence.Entity;
 
-@Entity
+//@Entity
 public class LoginForm {//クラス名をテンプレートで最初小文字で使える。たぶん。requestmappingの引数ならmode.addattributeで渡さなくていい？
 
 	/* 名前 */

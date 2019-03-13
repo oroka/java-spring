@@ -12,13 +12,10 @@ import com.todolist.service.UserService;
 @RequestMapping("todolist")
 public class ToDoListController {
 	
-	@Autowired
-	private UserService userService;
 	
 	@GetMapping
 	public String index(Model model) {		
-		model.addAttribute("users", userService.findAll());
-		return "index";		
+		return "todolist";		
 	}
 	
 }

@@ -2,7 +2,7 @@ package com.todolist.domain;
 
 import javax.persistence.Entity;
 
-@Entity
+//@Entity
 public class SearchForm {
 	
 	/* 名前検索 */
