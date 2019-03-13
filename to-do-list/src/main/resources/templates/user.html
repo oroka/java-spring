@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_header :: header(~{::title})">
+    <title>user list</title>
+</head>
+<body class="bg-light">
+
+<th:block th:replace="_nav :: nav(user)"/>
+
+<main role="main" class="container">
+    <div class="py-5 text-center">
+        <h2>user list</h2>
+    </div>
+
+    <div>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>password</th>
+                <th>email</th>
+                <th>role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user, stat : ${users}" th:object="${user}">
+                <td th:text="*{id}"></td>
+                <td th:text="*{name}"></td>
+                <td th:text="*{password}"></td>
+                <td th:text="*{email}"></td>
+                <td th:text="*{admin == true} ? 'admin' : 'user'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<th:block th:replace="_include :: basic"/>
+</body>
+</html>
