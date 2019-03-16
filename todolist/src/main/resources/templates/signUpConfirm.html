@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_header :: header(~{::title})">
+    <title>Sign Up Confirm</title>
+</head>
+<body class="bg-light">
+
+<th:block th:replace="_nav :: nav(signup)"/>
+
+<main role="main" class="container">
+    <div class="py-5 text-center">
+        <h2>Sign Up Confirm</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive-md">
+            <p th:if="${validationError}" th:text="${validationError}">validation error</p>
+                <table class="table table-striped table-bordered" th:object="${user}">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">field</th>
+                        <th scope="col">value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td th:text="*{name}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td th:text="*{email}">(Not entered)</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Password</th>
+                        <td class="hidetext" th:text="*{password}"></td>
+                    </tr>
+                    
+                    </tbody>
+                </table>
+                <form action="#" th:action="@{/signup/register}" th:object="${user}" method="post">
+                	<input type="hidden" class="form-control" th:field="*{name}" />
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="help-block">error</div>
+                    <input type="hidden" class="form-control" th:field="*{email}" />
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="help-block">error</div>
+                    <input type="hidden" class="form-control" th:field="*{password}" />
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="help-block">error</div>
+                	<button class="btn btn-primary btn-lg btn-block" type="submit">confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-muted text-center text-small">
+        <p class="mb-1">&nbsp;</p>
+    </footer>
+</main>
+
+<th:block th:replace="_include :: basic"/>
+</body>
+</html>
