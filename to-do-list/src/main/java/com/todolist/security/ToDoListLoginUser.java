@@ -15,9 +15,15 @@ public class ToDoListLoginUser extends org.springframework.security.core.userdet
         return user;
     }
 
+    /*
+     * ToDoListAuthenticationEntryPoint と　onAuthenticationSuccess　の間
+     * onAuthenticationSuccess　の前 
+     * @param user
+     */
     public ToDoListLoginUser(User user) {
-        super(user.getName(), user.getPassword(), determineRoles(user.getAdmin()));
-        this.user = user;
+    	super(user.getEmail(), user.getPassword(), determineRoles(user.getAdmin()));//emailじゃないの？？認証情報を他で使う場面Principalなど
+    	System.out.println("ToDoListLoginUser - Constructor : ");
+    	this.user = user;
     }
 
     private static final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");

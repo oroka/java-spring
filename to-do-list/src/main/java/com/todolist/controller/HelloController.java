@@ -19,14 +19,14 @@ import com.todolist.security.ToDoListLoginUser;
 public class HelloController {
 	
 	@GetMapping(path = {"", "hello"})
-    public String greeting(Model model, Principal principal) {
+    public String greeting(Model model/*, Principal principal*/) {
 		
-		System.out.println("principal : " + principal);
-		if(principal != null) {
+		//System.out.println("principal : " + principal);
+		/*if(principal != null) {
 			Authentication auth = (Authentication)principal;
 			ToDoListLoginUser user = (ToDoListLoginUser)auth.getPrincipal();
 			model.addAttribute("userLoginFlag", user.getUser());
-		}
+		}*/
 		
         model.addAttribute("message", "HELLO WORLD");
         model.addAttribute("date", LocalDateTime.of(2018, 4, 13, 11, 12, 13));

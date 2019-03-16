@@ -40,13 +40,13 @@ public class ToDoListAuthenticationEntryPoint implements AuthenticationEntryPoin
         response.sendRedirect("/loginForm");
         
         /*
-         * Redirect to Error Page 
+         * Redirect to Error Page
          */
         //response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());        
     }
 
     private void dump(AuthenticationException e) {
-    	System.out.println("AuthenticationException : " + e);
+    	System.out.println("ToDoListAuthenticationEntryPoint - AuthenticationException : " + e);
         if (e instanceof BadCredentialsException) {
             log.debug("BadCredentialsException : {}", e.getMessage());
         } else if (e instanceof LockedException) {

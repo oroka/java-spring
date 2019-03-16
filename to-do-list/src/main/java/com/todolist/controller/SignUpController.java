@@ -25,45 +25,38 @@ public class SignUpController {
 	UserService userService;
 
 	@GetMapping
-	public String input(SignUpForm form, Model model) {
+	public String input(User user, Model model) {
 		
 		
 		return "signUp";
 	}
 	
 	@PostMapping
-	public String conform(@Validated @ModelAttribute SignUpForm form, BindingResult result, Model model) {
+	public String conform(@Validated @ModelAttribute User user, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			model.addAttribute("validationError", "不正な値が入力されました");
-			return input(form, model);
+			return input(user, model);
 		}
-		if(!form.getPassword().equals(form.getConfpassword())) {
+		if(!user.getPassword().equals(user.getConfpassword())) {
 			model.addAttribute("validationError", "パスワードが一致しません");
-			return input(form, model);
+			return input(user, model);
 		}
-		return "signUpConfirm";
-	}
-	
-	@GetMapping("register")
-	public String fefefe(SignUpForm form, Model model) {
-		
-		
 		return "signUpConfirm";
 	}
 	
 	@PostMapping("register")
-	public String save(@Validated SignUpForm form, BindingResult result, Model model) {
-		System.out.println("form.getNickname : " + form.getNickname());
-		System.out.println("form.getPassword * " + form.getPassword());
+	public String save(@Validated User user, BindingResult result, Model model) {
+		//System.out.println("form.getNickname : " + form.getNickname());
+		//System.out.println("form.getPassword * " + form.getPassword());
 		
-		/* SignUpFormの全てのフィールドに値を入れてないと出る。
-		 * if(result.hasErrors()) {
+		//SignUpFormの全てのフィールドに値を入れてないとエラーが出る。
+		if(result.hasErrors()) {
 			System.out.println("Error Count : " + result.getErrorCount());
 			for(ObjectError e : result.getAllErrors()) System.out.println("Error : " + e);
 			model.addAttribute("validationError", "登録できませんでした。");
-			return fefefe(form, model);
-		}*/
-		userService.save(User.of(form.getNickname(), form.getPassword(), form.getEmail()));
-		return "signUpConfirm";
+			return "signup";
+		}
+		userService.save(User.of(user.getName(), user.getPassword(), user.getEmail()));
+		return "loginForm";
 	}
 }

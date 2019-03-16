@@ -30,6 +30,7 @@ public class User implements Serializable {
   private String name;
   @Column(name = "password", nullable = false, length = 255)
   private String password;
+  private String confpassword;
   @Column(name = "email", nullable = false, unique = true, length = 255)
   private String email;
   @Column(name = "admin_flag", nullable = false)

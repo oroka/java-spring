@@ -3,6 +3,7 @@ package com.todolist.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,11 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+		.headers().cacheControl().disable().and()
 		.csrf()
 		.disable()
 		// AUTHORIZE
 		.authorizeRequests()
-			.mvcMatchers("/", "/hello/**")
+			.mvcMatchers("/", "/signup/**", "/hello/**", "/loginForm/**")
 				.permitAll()
 			.mvcMatchers("/user/**")
 				.hasRole("USER")
@@ -46,16 +48,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		// LOGIN
 		.formLogin()
-			.loginProcessingUrl("/login").permitAll()
+			.loginProcessingUrl("/login")
 				.usernameParameter("email")
 				.passwordParameter("password")
 			.loginPage("/loginForm")
+			//.defaultSuccessUrl("/home", false)
+			//.failureUrl("/loginForm?error=true").permitAll()
 			.successHandler(authenticationSuccessHandler())
 			.failureHandler(authenticationFailureHandler())
 		.and()
 		// LOGOUT
 		.logout()
 			.logoutUrl("/logout")
+			//.logoutSuccessUrl("/home")
 			.invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID")
 			.logoutSuccessHandler(logoutSuccessHandler())

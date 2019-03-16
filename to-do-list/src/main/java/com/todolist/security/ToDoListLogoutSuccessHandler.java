@@ -17,7 +17,8 @@ public class ToDoListLogoutSuccessHandler implements LogoutSuccessHandler {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		response.setStatus(HttpStatus.OK.value());
-		response.sendRedirect(request.getContextPath());
+		System.out.println("request.getRequestURI() : " + request.getRequestURI());
+		response.sendRedirect(request.getContextPath()/*request.getRequestURI()*/);
 	}
 	
 }

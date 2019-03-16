@@ -25,11 +25,10 @@
             <li th:class="${flag.equals('user')} ? 'nav-itme active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/user}">user list</a>
             </li>
-            <li th:class="${flag.equals('signup')} ? 'nav-itme active' : 'nav-item'">
+            <!--<li th:class="${flag.equals('signup')} ? 'nav-itme active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/signup}">Sign Up</a>
-            </li>
+            </li>-->
             <li th:class="${flag.equals('loginForm')} ? 'nav-itme active' : 'nav-item'">
-            <!-- １ログインの状態でlogin logoutの表示を変える　 -->
                 <a class="nav-link" th:href="@{/loginForm}" th:unless="${userLoginFlag}">login</a>
                 <a class="nav-link" th:href="@{/logout}" th:if="${userLoginFlag}">logout</a>
             </li>
@@ -39,6 +38,9 @@
                     <a class="dropdown-item" th:href="@{/hello}">hello</a>
                     <a class="dropdown-item" th:href="@{/memo}">memo</a>
                     <a class="dropdown-item" th:href="@{/simple}">simple form</a>
+                    <a class="dropdown-item" th:href="@{/todolist}">to-do list</a>
+                    <a class="dropdown-item" th:href="@{/user}">user list</a>
+                    <a class="dropdown-item" th:href="@{/login}">login</a>
                 </div>
             </li>
         </ul>

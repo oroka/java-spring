@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * 認証が成功した時の処理
@@ -30,8 +31,26 @@ public class ToDoListAuthenticationSuccessHandler implements AuthenticationSucce
             log.info("Response has already been committed.");
             return;
         }
+        Enumeration<String> ess = request.getHeaders("Cache-Control");
+        while(ess.hasMoreElements())
+        	System.out.println("request.getHeaders(\"Cache-Control\") : " + ess.nextElement());
+        ess = request.getHeaders("Referer");
+        while(ess.hasMoreElements())
+        	System.out.println("request.getHeaders(\"Referer\") : " + ess.nextElement());
         response.setStatus(HttpStatus.OK.value());
-        response.sendRedirect(request.getContextPath());
+        //System.out.println("request.getRequestURI() : " + request.getRequestURI());
+        System.out.println("request.getAttribute : " + request.getAttribute("javax.servlet.forward.request_uri"));
+        Enumeration<String> keys = request.getAttributeNames();
+        while(keys.hasMoreElements()) {
+        	System.out.println(keys.nextElement());//nai
+        }
+        
+        ToDoListLoginUser user = (ToDoListLoginUser)auth.getPrincipal();
+        System.out.println("user - preUrl : " + user.getUser().getName());
+        
+        //for(String s : request.getAttributeNames())
+        	//System.out.println("")
+        response.sendRedirect(request.getContextPath());//　ログイン前のページに遷移したい。。。
         clearAuthenticationAttributes(request);
     }
 

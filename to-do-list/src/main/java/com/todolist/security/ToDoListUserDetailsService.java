@@ -19,8 +19,9 @@ public class ToDoListUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(final String email) {
-        // emailでデータベースからユーザーエンティティを検索する
+    public UserDetails loadUserByUsername(final String email) {// フォームで入力した値を使う。
+        // emailでデータベースからユーザーエンティティを検索し、返ってきたUserクラスでUserDetailクラスを作成する。
+    	System.out.println("ToDoListUserDetailsService - loadUserByUsername : ");
         return userRepository.findByEmail(email)
                 .map(ToDoListLoginUser::new)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
