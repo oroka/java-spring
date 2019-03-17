@@ -26,14 +26,12 @@ public class UserDomain {
 	private String name;
 	@Column(name = "password", nullable = false, length = 255)
 	private String password;
-	// no table column
-	private String confpassword;
 	@Column(name = "email", nullable = false, unique = true, length = 255)
 	private String email;
 	@Column(name = "admin_flag", nullable = false)
 	private Boolean admin;
 	
 	public static UserDomain of(String name, String password, String email) {
-		return UserDomain.builder().name(name).password(password).email(email).build();
+		return UserDomain.builder().name(name).password(password).email(email).admin(false).build();
 	}
 }

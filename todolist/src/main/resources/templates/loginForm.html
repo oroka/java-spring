@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="_header :: header(~{::title})">
-    <title>Sign Up Confirm</title>
+    <title>Login Form</title>
 </head>
 <body class="bg-light">
 
 <th:block th:replace="_nav :: nav(loginForm)"/>
 
 <main role="main" class="container">
+
+	<div class="starter-template">
+        <h1>Login Form</h1>
+    </div>
+
     <div class="py-5 text-center">
         <h2>Login Form</h2>
+        <p th:if="${param.error}">Error</p>
+        <p th:text="${param.error} ? 'Error' : 'OK'" />
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+    	<div class="col-md-2"></div>
+        <div class="col-md-8">
             <div class="table-responsive-md">
             <p th:if="${validationError}" th:text="${validationError}">validation error</p>
 	            <form action="#" th:action="@{/login}" method="post">
@@ -45,7 +53,7 @@
 	        	</form>
             </div>
             <br>
-	        <div><a th:href="@{signup}">Go To Sign Up</a></div>
+	        <div><a th:href="@{signUp}">Go To Sign Up</a></div>
         </div>
     </div>
 

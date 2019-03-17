@@ -52,7 +52,7 @@ public class ScheduleController {
 		schedule.setEmail("sample@email.com");
 		
 		scheduleService.save(schedule);
-		return "schedule";
+		return "redirect:schedule";
 	}
 	//　登録・検索・削除
 }
