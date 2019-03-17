@@ -13,8 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "users")
+@Entity//for jpa
+@Table(name = "users")//for jpa
 @Data
 @Builder
 @AllArgsConstructor

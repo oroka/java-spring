@@ -34,6 +34,8 @@ public class MemoController {
 		}*/
     	
         Page<Memo> memos = memoService.findAll(page);
+        memos.getTotalPages();
+        model.addAttribute("totalPages", memos.getTotalPages());
         model.addAttribute("memos", memos);
         return "memo";
     }

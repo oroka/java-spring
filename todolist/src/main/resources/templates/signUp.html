@@ -8,9 +8,12 @@
 <th:block th:replace="_nav :: nav(signup)"/>
 
 <main role="main" class="container">
-	<br>
+	<div class="starter-template">
+        <h1>Sign Up Confirm</h1>
+    </div>
+    
     <div class="py-5 text-center">
-        <h2>Sign Up Form</h2>
+        <h2>Input</h2>
         <p th:if="${validationError}" th:text="${validationError}">validation error</p>
     </div>
 

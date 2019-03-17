@@ -13,7 +13,8 @@
     </div>
 
     <div>
-        <table class="table table-striped table-sm">
+    <a th:each="i : ${#numbers.sequence(0, memos.getTotalPages()-1)}" th:href="@{/memo?page=} + ${i}" th:text="${i+1}"></a>
+    	<table class="table table-striped table-sm">
             <thead>
             <tr>
                 <th>id</th>

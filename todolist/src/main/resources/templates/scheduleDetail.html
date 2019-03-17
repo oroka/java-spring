@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_header :: header(~{::title})">
+    <title>ToDo Application</title>
+</head>
+<body class="bg-light">
+
+<th:block th:replace="_nav :: nav(schedule)"/>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Schedule Detail</h1>
+    </div>
+
+    <div>
+        <h2>Title</h2>
+        <p th:text="${schedule.title}">title</p>
+        <!-- <p><a th:href="@{/schedule/register}">スケジュール登録</a></p> -->
+    </div>
+    
+    <div>
+        <h2>Description</h2>
+        <p th:text="${schedule.description}">description</p>
+    </div>
+    
+    <div>
+        <h2>Start Time</h2>
+        <p th:text="${#temporals.format(schedule.start_time, 'yyyy/MM/dd a HH:mm:ss')}">start_time</p>
+    </div>
+    
+    <div>
+        <h2>End Time</h2>
+        <p th:text="${#temporals.format(schedule.end_time, 'yyyy/MM/dd a HH:mm:ss')}">end_time</p>
+    </div>
+    
+    <div>
+    	<a th:href="@{/schedule}">Schedule Index</a>
+    </div>
+
+</main><!-- /.container -->
+
+<th:block th:replace="_include :: basic"/>
+</body>

@@ -13,11 +13,11 @@
             <li th:class="${flag.equals('Home')} ? 'nav-itme active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li th:class="${flag.equals('todolist')} ? 'nav-itme active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/todolist}">list</a>
+            <li th:class="${flag.equals('schedule')} ? 'nav-itme active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/schedule}">schedule</a>
             </li>
-            <li th:class="${flag.equals('user')} ? 'nav-itme active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/user}">user</a>
+            <li th:class="${flag.equals('userlist')} ? 'nav-itme active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/userlist}">userlist</a>
             </li>
             <li th:class="${flag.equals('loginForm')} ? 'nav-itme active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/loginForm}" th:unless="${userLoginFlag}">login</a>
@@ -26,9 +26,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" th:href="@{/}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" th:href="@{/todolist}">list</a>
-                    <a class="dropdown-item" th:href="@{/user}">user</a>
-                    <a class="dropdown-item" th:href="@{/login}">login</a>
+                    <a class="dropdown-item" th:href="@{/schedule}">schedule</a>
+                    <a class="dropdown-item" th:href="@{/userlist}">userlist</a>
+                    <a class="dropdown-item" th:href="@{/loginForm}">login</a>
                 </div>
             </li>
         </ul>

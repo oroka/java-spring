@@ -15,6 +15,7 @@ public class MemoService {
 	MemoMapper memoMapper;
 	
     public Page<Memo> findAll(Pageable page){
+    	//memoMapper.
     	return memoMapper.findAll(page);
     };
 }

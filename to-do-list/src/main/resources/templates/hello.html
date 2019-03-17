@@ -23,7 +23,7 @@
         <h2>temporals</h2>
         <h3>format</h3>
         <p th:text="${#temporals.format(date, 'yyyy-MM-dd HH:mm:ss')}"></p>
-        <p th:text="|${#temporals.year(date)}年${#temporals.month(date)}月${#temporals.day(date)}日|"></p>
+        <p th:text="|${#temporals.year(date)}蟷ｴ${#temporals.month(date)}譛�${#temporals.day(date)}譌･|"></p>
         <p th:text="${#temporals.format(date, 'a', #locale.US).toLowerCase()}">ampm</p>
         <h3>convinient</h3>
         <p th:text="${#temporals.createNow()}">LocalDateTime now</p>

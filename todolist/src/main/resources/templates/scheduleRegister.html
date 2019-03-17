@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_header :: header(~{::title})">
+    <title>ToDo Application</title>
+</head>
+<body class="bg-light">
+
+<th:block th:replace="_nav :: nav(schedule)"/>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>Schedule Register</h1>
+    </div>
+
+    <div class="py-5 text-center">
+        <h2>Schedule Register</h2>
+        <p th:if="${validationError}" th:text="${validationError}">validation error</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive-md">
+	            <form action="#" th:action="@{/schedule}" th:object="${scheduleDomain}" method="post">
+	            	<div>
+	                    <label class="control-label" for="title">Title<span class="text-muted">(2 - 60)</span></label>
+	                    <input type="text" class="form-control" th:field="*{title}" th:placeholder="タイトルを入力してください"/>
+	                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="help-block">error</div>
+	                </div>
+	                <div>
+	                    <label class="control-label" for="description">Description<span class="text-muted">(2 - 60)</span></label>
+	                    <textarea class="form-control" th:field="*{description}" /></textarea>
+	                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="help-block">error</div>
+	                </div>
+	                <div>
+	                    <label class="control-label" for="start_time">StartTime<span class="text-muted">(2 - 60)</span></label>
+	                    <input type="datetime-local" class="form-control" th:field="*{start_time}" />
+	                    <div th:if="${#fields.hasErrors('start_time')}" th:errors="*{start_time}" class="help-block">error</div>
+	                </div>
+	                <div>
+	                    <label class="control-label" for="end_time">EndTime<span class="text-muted">(2 - 60)</span></label>
+	                    <input type="datetime-local" class="form-control" th:field="*{end_time}" />
+	                    <div th:if="${#fields.hasErrors('end_time')}" th:errors="*{end_time}" class="help-block">error</div>
+	                </div>
+	                <div>
+	                	<br>
+	                    <button class="btn btn-primary btn-lg btn-block" type="submit">confirm</button>
+	                </div>	            
+	            </form>
+            </div>
+       	</div>
+   </div>
+
+</main><!-- /.container -->
+
+<th:block th:replace="_include :: basic"/>
+</body>
+</html>

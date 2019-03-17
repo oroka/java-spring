@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_header :: header(~{::title})">
+    <title>ToDo Application</title>
+</head>
+<body class="bg-light">
+
+<th:block th:replace="_nav :: nav(userlist)"/>
+
+<main role="main" class="container">
+
+    <div class="starter-template">
+        <h1>User List</h1>
+    </div>
+
+    <div>
+        <h2>Index</h2>
+        <p><a th:href="@{/schedule}">スケジュール</a></p>
+        <p><a th:href="@{/userlist}">ユーザー</a></p>
+        <p><a th:href="@{/loginForm}">ログイン</a></p>
+    </div>
+
+</main><!-- /.container -->
+
+<th:block th:replace="_include :: basic"/>
+</body>
+</html>
