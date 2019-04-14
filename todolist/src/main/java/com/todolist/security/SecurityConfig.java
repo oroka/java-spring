@@ -23,6 +23,8 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
+//　ログイン・セキュリティ設定。3週間前のこと思い出すのが大変。
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -57,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("email")
 				.passwordParameter("password")
 			.loginPage("/loginForm")
-			.defaultSuccessUrl("/", false)
+			.defaultSuccessUrl("/", true)//falseでログインページに遷移する前のページに戻るというはなしだが、、、
 			.failureUrl("/loginForm?error=true").permitAll()
 			//.successHandler(authenticationSuccessHandler())
 			//.failureHandler(authenticationFailureHandler())

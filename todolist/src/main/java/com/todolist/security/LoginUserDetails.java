@@ -26,6 +26,7 @@ public class LoginUserDetails extends org.springframework.security.core.userdeta
     private static final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
 
     private static List<GrantedAuthority> determineRoles(boolean isAdmin) {
+    	System.out.println("LoginUserDetails - determineRoles : ");
         return isAdmin ? ADMIN_ROLES : USER_ROLES;
     }
 }

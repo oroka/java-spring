@@ -28,4 +28,13 @@ public class UserServiceJPA {
 		System.out.println("UserServiceJPA - save");
 		userMapper.save(user);
 	}
+	
+	public void delete(UserDomain user) {
+		System.out.println("UserServiceJPA - delete");
+		userMapper.delete(user);
+	}
+	
+	public UserDomain findOneById(Long id) {
+		return userMapper.getOne(id);
+	}
 }

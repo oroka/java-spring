@@ -3,11 +3,14 @@ package com.todolist.controller;
 import java.security.Principal;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.todolist.security.LoginUserDetails;
 
 @ControllerAdvice
 public class ControllerAdviceImpl {
@@ -23,11 +26,11 @@ public class ControllerAdviceImpl {
 	@ModelAttribute("userLoginFlag")
     public void addOneObject(Principal principal, Model model) {
         // Modelに追加する
-		/*if(principal != null) {
+		if(principal != null) {
 			Authentication auth = (Authentication)principal;
-			ToDoListLoginUser user = (ToDoListLoginUser)auth.getPrincipal();
+			LoginUserDetails user = (LoginUserDetails)auth.getPrincipal();
 			model.addAttribute("userLoginFlag", user.getUser());
-		}*/
+		}
     }
 	
 }
