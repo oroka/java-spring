@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.disable()
 		// AUTHORIZE
 		.authorizeRequests()
-			.mvcMatchers("/", "/signUp/**", "/schedule", "/loginForm/**")
+			.mvcMatchers("/", "/signUp/**", "/schedule", "/schedule/detail/**", "/schedule/search/**", "/loginForm/**")
 				.permitAll()
 			.mvcMatchers("/user/**")
 				.hasRole("USER")

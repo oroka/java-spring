@@ -32,8 +32,10 @@
                 </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <!-- get current page and go one and another -->
+        <!--  -->
+        <form class="form-inline my-2 my-lg-0" th:action="@{/schedule/search}" method="get" th:object="${search_word}">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="word">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

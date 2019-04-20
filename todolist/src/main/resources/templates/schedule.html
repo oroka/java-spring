@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             <tr th:each="schedule, stat : ${schedules}" th:object="${schedule}">
-                <td><a th:href="@{/schedule/} + *{id}" th:text="*{title}"/></td>
+                <td><a th:href="@{/schedule/detail/} + *{id}" th:text="*{title}"/></td>
                 <!-- <td th:text="*{description}"></td> -->
                 <td th:text="*{#temporals.format(start_time, 'yyyy/MM/dd a HH:mm:ss')}"></td>
                 <td th:text="*{#temporals.format(end_time, 'yyyy/MM/dd a HH:mm:ss')}"></td>

@@ -16,13 +16,15 @@
     <div>
         <h2>Title</h2>
         <p th:text="${schedule.title}">title</p>
-        <!-- <p><a th:href="@{/schedule/register}">スケジュール登録</a></p> -->
+        <!-- <p><a th:href="@{/schedule/register}">繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ逋ｻ骭ｲ</a></p> -->
     </div>
     
     <div>
         <h2>Description</h2>
         <p th:text="${schedule.description}">description</p>
     </div>
+    
+    <div><h2>Now</h2><p th:text="${#temporals.format(now_time, 'yyyy/MM/dd a HH:mm:ss')}">time</p></div>
     
     <div>
         <h2>Start Time</h2>
