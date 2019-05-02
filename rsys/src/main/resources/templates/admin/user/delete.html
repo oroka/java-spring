@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>Confirm Input Information</title>
+</head>
+<body>
+<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+<h3>Confirm</h3>
+
+	<form action="#" th:action="@{/admin/user/delete}" th:object="${user}" method="post">
+		<table>
+			<tr>
+				<td>ID</td>
+				<td th:text="*{id}"></td>
+				<td><input type="hidden" th:name="id" th:value="*{id}"></td>
+				<td th:if="${#fields.hasErrors('id')}" th:errors="*{id}">error</td>
+			</tr>
+			<tr>
+				<td>First Name</td>
+				<td th:text="*{firstName}"></td>
+				<td><input type="hidden" th:name="firstName" th:value="*{firstName}"></td>
+				<td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">error</td>
+			</tr>
+			<tr>
+				<td>Last Name</td>
+				<td th:text="*{lastName}"></td>
+				<td><input type="hidden" th:name="lastName" th:value="*{lastName}"></td>
+				<td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">error</td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td th:text="*{email}"></td>
+				<td><input type="hidden" th:name="email" th:value="*{email}"/></td>
+				<td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">error</td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td th:text="*{password}"></td>
+				<td><input type="hidden" th:name="password" th:value="*{password}"></td>
+				<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">error</td>
+			</tr>
+			<tr>
+				<td>Section</td>
+				<td th:text="*{sectionName}"></td>
+				<td><input type="hidden" th:name="sectionName" th:value="*{sectionName}"></td>
+				<td th:if="${#fields.hasErrors('sectionName')}" th:errors="*{sectionName}">error</td>
+			</tr>
+			<tr>
+				<td>Salary</td>
+				<td th:text="*{salary}"></td>
+				<td><input type="hidden" th:name="salary" th:value="*{salary}"></td>
+				<td th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">error</td>
+			</tr>
+			<tr>
+				<td>Role</td>
+				<td th:text="*{roleName}"></td>
+				<td><input type="hidden" th:name="roleName" th:value="*{roleName}"/></td>
+	            <td th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}">error</td>
+			</tr>
+		</table>
+		<button type="submit">delete</button>
+	</form>
+
+	<form action="#" th:action="@{/admin/user/list}" method="get">
+		<button type="submit">cancel</button>
+	</form>
+
+</body>
+</html>

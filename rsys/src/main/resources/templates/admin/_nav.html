@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<nav th:fragment="nav(flag)">
+    <div>
+    	<a th:href="@{/admin}">Entrance</a>
+    	<a th:href="@{/admin/user/input}">Add User</a>
+    	<a th:href="@{/admin/user/list}">User List</a>
+    	<a th:href="@{/admin/shift}">Shift List</a>
+    	<a th:href="@{/admin/schedule/list}">Schedule List</a>
+    </div>
+</nav>
+</body>
+</html>

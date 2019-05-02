@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>Manage Shift Information.</title>
+</head>
+<body>
+<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+<h3>Shift Information</h3>
+	<table>
+		<tr>
+			<th>Name</th>
+			<th>Start Time</th>
+			<th>End Time</th>
+			<th></th><th></th>
+		</tr>
+		<tr th:each="entity, stat : ${entities}" th:object="${entity}">
+			<td th:text="*{name}"></td>
+			<td th:text="*{startTime}"></td>
+			<td th:text="*{endTime}"></td>
+			<td>
+				<form action="#" th:action="@{/admin/shift/edit}" method="post">
+					<input type="hidden" th:name="id" th:value="*{id}"/>
+					<button type="submit">edit</button>
+				</form>
+			</td>
+			<td>
+				<form action="#" th:action="@{/admin/shift/delete}" method="post">
+					<input type="hidden" th:name="id" th:value="*{id}" />
+					<button type="submit">delete</button>
+				</form>
+			</td>
+		</tr>
+	</table>
+	<div></div>
+	<form action="#" th:action="@{/admin/shift/input}" th:object="${shift}" method="post">
+		<div th:if="*{id}!=null"><input type="hidden" th:name="id" th:value="*{id}" /></div>
+		<div>
+			<label>Name</label>
+			<input type="text" th:field="*{name}" th:value="*{name}" />
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error</div>
+		</div>
+		<div>
+			<label>Start Time</label>
+			<input type="text" th:field="*{startTime}" th:value="*{startTime}" />
+			<div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">error</div>
+		</div>
+		<div>
+			<label>End Time</label>
+			<input type="text" th:field="*{endTime}" th:value="*{endTime}" />
+			<div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">error</div>
+		</div>
+
+		<button type="submit">confirm</button>
+		<button type="reset">reset</button>
+	</form>
+</body>
+</html>
