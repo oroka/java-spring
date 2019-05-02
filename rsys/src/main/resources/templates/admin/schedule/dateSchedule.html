@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>Schedule Of Date</title>
+</head>
+<body>
+<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+<h3>Schedule Of [[${#temporals.format(date, 'uuuu年MM月dd日')}]]</h3>
+<div><a th:href="@{'/admin/schedule/' + ${date.minusMonths(1).getYear()} + '/' + ${date.minusMonths(1).getMonthValue()}}">Prev</a>
+| [[${#temporals.format(date,'uuuu年MM月')}]]
+| <a th:href="@{'/admin/schedule/' + ${date.plusMonths(1).getYear()} + '/' + ${date.plusMonths(1).getMonthValue()}}">Next</a></div>
+<table>
+	<tr>
+		<th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
+	</tr>
+	<tr th:each="week, stat : ${calendar}" th:object="${calendar}">
+		<th:block th:each="day, stat2 : ${week.getWeekDay()}">
+			<td><a th:unless="${day==' '}" th:href="@{'/admin/schedule/' + ${date.withDayOfMonth(__${day}__)}}" th:text="${day}"></a></td>
+		</th:block>
+	</tr>
+</table>
+<h4>Schedule</h4>
+<table>
+	<tr>
+		<th>ID</th>
+		<th>Date</th>
+		<th>Shift</th>
+	</tr>
+	<tr th:each="user, stat : ${schedule}" th:object="${user}">
+		<td th:text="${user.getScheduleId().getUserId()}"></td>
+		<td><a th:href="@{'/admin/schedule/' + ${user.getScheduleId().getWorkDate()}}" th:text="${user.getScheduleId().getWorkDate()}"></a></td>
+		<td th:text="${user.getShift().getName()}"></td>
+	</tr>
+</table>
+
+</body>
+</html>

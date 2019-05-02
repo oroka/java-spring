@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>User Schedule</title>
+</head>
+<body>
+<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+<h3>Schedule Of [[${user.getLastName()}]]</h3>
+
+<table>
+<tr>
+	<th>ID</th>
+	<th>Date</th>
+	<th>Shift</th>
+</tr>
+<tr th:each="user, stat : ${schedule}" th:object="${user}">
+	<td th:text="${user.getScheduleId().getUserId()}"></td>
+	<td><a th:href="@{'/admin/schedule/' + ${user.getScheduleId().getWorkDate()}}" th:text="${user.getScheduleId().getWorkDate()}"></a></td>
+	<td th:text="${user.getShift().getName()}"></td>
+</tr>
+</table>
+
+</body>
+</html>
