@@ -16,7 +16,15 @@ public class ScheduleService {
 	@Autowired
 	ScheduleRepository scheduleRepository;
 
-	public List<Schedule> findSchedules(LocalDate date){
+	public List<Schedule> findSchedulesByDate(LocalDate date){
 		return scheduleRepository.findByScheduleId_workDateOrderByScheduleId_userIdAsc(date);
+	}
+
+	public List<Schedule> findAll(){
+		return scheduleRepository.findAll();
+	}
+
+	public List<Schedule> findSchedulesByUserId(Integer userId){
+		return scheduleRepository.findByScheduleId_userIdOrderByScheduleId_workDateAsc(userId);
 	}
 }

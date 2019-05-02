@@ -10,4 +10,6 @@ import rsys.domain.model.ScheduleId;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, ScheduleId> {
 	List<Schedule> findByScheduleId_workDateOrderByScheduleId_userIdAsc(LocalDate workDate);
+
+	List<Schedule> findByScheduleId_userIdOrderByScheduleId_workDateAsc(Integer userId);
 }

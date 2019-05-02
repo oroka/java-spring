@@ -22,11 +22,11 @@ import lombok.Data;
 @Data
 @Entity
 public class Shift {
-	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Id
 	@NotNull
 	@Size(min=2, max=10)
 	@Column(name="name")

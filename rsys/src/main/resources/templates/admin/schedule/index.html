@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/_header :: header(~{::title})">
 	<meta charset="UTF-8"/>
-	<title>List of User's Schedule</title>
+	<title>Index of Schedule</title>
 </head>
 <body>
 <th:block th:replace="admin/_nav :: nav(Home)"></th:block>
-<h3>List of User's Schedule</h3>
+<h3>Index Of Schedule</h3>
 <!--
 <table>
 	<tr>
@@ -38,23 +38,45 @@
 	</tr>
 </table>
 -->
-<div><a th:href="@{'/admin/schedule/' + ${date.minusMonths(1)}}">Prev</a> | [[${#temporals.format(date,'uuuu年MM月')}]] | <a th:href="@{'/admin/schedule/' + ${date.plusMonths(1)}}">Next</a></div>
-<div></div>
+<div><a th:href="@{'/admin/schedule/' + ${date.minusMonths(1).getYear()} + '/' + ${date.minusMonths(1).getMonthValue()}}">Prev</a>
+| [[${#temporals.format(date,'uuuu年MM月')}]]
+| <a th:href="@{'/admin/schedule/' + ${date.plusMonths(1).getYear()} + '/' + ${date.plusMonths(1).getMonthValue()}}">Next</a></div>
 <table>
 	<tr>
 		<th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
 	</tr>
 	<tr th:each="week, stat : ${calendar}" th:object="${calendar}">
 		<th:block th:each="day, stat2 : ${week.getWeekDay()}">
-			<td  th:text="${day}"></td>
+			<td><a th:unless="${day==' '}" th:href="@{'/admin/schedule/' + ${date.withDayOfMonth(__${day}__)}}" th:text="${day}"></a></td>
 		</th:block>
 	</tr>
 </table>
-
+<h4>User List</h4>
+<table>
+<tr>
+	<th>ID</th>
+	<th>Name</th>
+	<th>Section</th>
+	<th></th>
+</tr>
+<tr th:each="user, stat : ${users}" th:object="${user}">
+	<td th:text="${user.getId()}"></td>
+	<td th:text="${user.getLastName()}"></td>
+	<td th:text="${user.getSectionName()}"></td>
+	<td>
+		<form action="#" th:action="@{/admin/schedule/user}" method="post">
+			<input type="hidden" th:name="userId" th:value="${user.getId()}"/>
+			<button type="submit">view</button>
+		</form>
+	</td>
+</tr>
+</table>
 <p>
 ToDoList<br>
 日付を選択するとその日にスケジュールのあるユーザーの一覧を表示する<br>
 ユーザーを選択するとユーザーのスケジュールを表示する（一覧を一ページ何件の形式）<br>
+データベースをCSV形式でダウンロード<br>
+CSV形式のファイルからデータベースに登録<br>
 思いつき<br>
 ユーザーに体力値を設定して、スケジュールに設置していくと体力が減っていく。<br>
 ユーザーにはコストがあり、スケジュールに設置するごとにコストが増える。<br>
