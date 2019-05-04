@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>Schedule List</title>
+</head>
+<body>
+	<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+	<h3>Schedule List</h3>
+	<div><a th:href="@{'/admin/schedule/' + ${date.minusMonths(1).getYear()} + '/' + ${date.minusMonths(1).getMonthValue()}}">Prev</a>
+	| [[${#temporals.format(date,'uuuu年MM月')}]]
+	| <a th:href="@{'/admin/schedule/' + ${date.plusMonths(1).getYear()} + '/' + ${date.plusMonths(1).getMonthValue()}}">Next</a></div>
+	<table>
+		<tr>
+			<th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
+		</tr>
+		<tr th:each="week, stat : ${calendar}" th:object="${calendar}">
+			<th:block th:each="day, stat2 : ${week.getWeekDay()}">
+				<td><a th:unless="${day==' '}" th:href="@{'/admin/schedule/' + ${date.withDayOfMonth(__${day}__)}}" th:text="${day}"></a></td>
+			</th:block>
+		</tr>
+	</table>
+	<h4>Schedule</h4>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Date</th>
+			<th>Shift</th>
+		</tr>
+		<tr th:each="user, stat : ${schedule}" th:object="${user}">
+			<td><a th:href="@{/admin/schedule/user(id = ${user.getScheduleId().getUserId()})}" th:text="${user.getScheduleId().getUserId()}"></a></td>
+			<td><a th:href="@{'/admin/schedule/' + ${user.getScheduleId().getWorkDate()}}" th:text="${user.getScheduleId().getWorkDate()}"></a></td>
+			<td th:text="${user.getShift().getName()}"></td>
+		</tr>
+	</table>
+	<div th:fragment=''>
+		<ul>
+			<li th:class="${page.firstPage}?'disabled':''" style="display:inline">
+				<span th:if='${page.firstPage}'>&lang;&lang;</span>
+				<a th:if='${not page.firstPage}' th:href='@{${url}(page=0,size=${page.size})}'>&lang;&lang;</a>
+			</li>
+			<li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''" style="display:inline">
+				<span th:if='${item.current}' th:text='${item.number}'></span>
+				<a th:if='${not item.current}' th:href="@{${url}(page=${item.number-1},size=${page.size})}"><span th:text='${item.number}'></span></a>
+			</li>
+			<li th:class="${page.lastPage}?'disabled':''" style="display:inline">
+				<span th:if='${page.lastPage}'>&rang;&rang;</span>
+				<a th:if='${not page.lastPage}' th:href="@{${url}(page=${page.totalPages-1},size=${page.size})}">&rang;&rang;</a>
+			</li>
+		</ul>
+	</div>
+	<!--
+	<div th:fragment='paginationbar'>
+	    <ul th:with='tp=5, t = ${page.number}-${tp} > 0 ? ${page.number}-${tp} : 0
+	    , u = ${page.totalPages}-1>${page.number}+${tp}?${page.number}+${tp}:${page.totalPages}-1'>
+	        <li th:class="${page.first} ? 'disabled':''" style="display:inline">
+	            <span th:if="${page.first}">&lang;&lang;</span>
+	            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">&lang;&lang;</a>
+	        </li>
+	        //<li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number}) ? 'active' : ''" style="display:inline">
+			<li th:each='i : ${#numbers.sequence(t, u)}' th:class="(${i}==${page.number}) ? 'active' : ''" style="display:inline">
+	            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
+	            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
+	                <span th:text='${i+1}'>1</span>
+	            </a>
+	        </li>
+	        <li th:class="${page.last} ? 'disabled':''" style="display:inline">
+	            <span th:if="${page.last}">&rang;&rang;</span>
+	            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">&rang;&rang;</a>
+	        </li>
+	    </ul>
+	</div>
+	-->
+</body>
+</html>

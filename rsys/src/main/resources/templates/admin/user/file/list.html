@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>User CSV File List</title>
+</head>
+<body>
+	<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+	<h3>User CSV File List</h3>
+	<ul>
+		<li th:each="l, stat : ${list}" th:text="${l}"></li>
+	</ul>
+	<form action="/admin/user/upload" th:action="@{/admin/user/upload}" method="post" enctype="multipart/form-data">
+        <input type="file" th:name="upload_file" /><br />
+        <button type="submit">upload</button>
+    </form>
+</body>
+</html>

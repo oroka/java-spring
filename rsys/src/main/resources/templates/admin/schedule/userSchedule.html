@@ -9,13 +9,30 @@
 <h3>Schedule Of [[${user.getLastName()}]]</h3>
 
 <table>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Section</th>
+		<th>Role</th>
+		<th>Email</th>
+	</tr>
+	<tr>
+		<td>[[${user.getId()}]]</td>
+		<td>[[${user.getLastName()}]]</td>
+		<td>[[${user.getSectionName()}]]</td>
+		<td>[[${user.getRoleName()}]]</td>
+		<td>[[${user.getEmail()}]]</td>
+	</tr>
+</table>
+<hr>
+<table>
 <tr>
-	<th>ID</th>
+	<!--/*<th>ID</th>*/-->
 	<th>Date</th>
 	<th>Shift</th>
 </tr>
 <tr th:each="user, stat : ${schedule}" th:object="${user}">
-	<td th:text="${user.getScheduleId().getUserId()}"></td>
+	<!--/*<td th:text="${user.getScheduleId().getUserId()}"></td>*/-->
 	<td><a th:href="@{'/admin/schedule/' + ${user.getScheduleId().getWorkDate()}}" th:text="${user.getScheduleId().getWorkDate()}"></a></td>
 	<td th:text="${user.getShift().getName()}"></td>
 </tr>

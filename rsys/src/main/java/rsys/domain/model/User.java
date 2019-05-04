@@ -56,4 +56,32 @@ public class User {
 
 	@Enumerated(EnumType.STRING)
 	private RoleName roleName;
+
+	public String toCsvString() {
+		return id + "," + firstName + "," + lastName + "," + email + "," + password + "," + sectionName + "," + salary + "," + roleName;
+	}
+
+	public static User of(Integer id, @NotNull @Size(min = 2, max = 30) String password,
+			@NotNull @Size(min = 2, max = 30) String firstName, @NotNull @Size(min = 2, max = 30) String lastName,
+			@NotNull @Email @Size(min = 2, max = 30) String email, @NotNull SectionName sectionName,
+			@NotNull @Min(150000) Long salary, RoleName roleName)  {
+		return new User(id, firstName, lastName, email, password, sectionName, salary, roleName);
+	}
+
+	public User() {}
+
+	public User(Integer id, @NotNull @Size(min = 2, max = 30) String password,
+			@NotNull @Size(min = 2, max = 30) String firstName, @NotNull @Size(min = 2, max = 30) String lastName,
+			@NotNull @Email @Size(min = 2, max = 30) String email, @NotNull SectionName sectionName,
+			@NotNull @Min(150000) Long salary, RoleName roleName) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.sectionName = sectionName;
+		this.salary = salary;
+		this.roleName = roleName;
+	}
 }

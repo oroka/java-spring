@@ -1,7 +1,16 @@
 package rsys.app.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -13,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import rsys.domain.model.RoleName;
 import rsys.domain.model.SectionName;
@@ -82,6 +93,71 @@ public class UserController {
 		model.addAttribute("RoleName", RoleName.values());
 		model.addAttribute("SectionName", SectionName.values());
 		return tplRoot + "edit";
+	}
+
+	/*
+	 * 追加項目：ファイル一覧・ファイル内容表示・データベースへの反映
+	 */
+
+	/*
+	 * 仕様：ファイルからデータベースを更新する
+	 * 手順：ファイルの選択->ファイルからデータベース更新
+	 * 前提条件：ファイルのアップロード
+	 *
+	 */
+
+
+	/*
+	 * UserCSVファイルの一覧を表示
+	 */
+	@GetMapping("file/list")
+	public String viewFileList(Model model) throws IOException {
+
+		List<String> list = Files.list(Paths.get("\\Users\\owner\\RsysData")).map(t->t.getFileName().toString()).collect(Collectors.toList());
+		model.addAttribute("list", list);
+
+		return "admin/user/file/list";
+	}
+
+	/*
+	 * 仕様：アップロードされたファイルを保存する
+	 * フォルダ：Users\owner\RsysData
+	 */
+	@PostMapping("upload")
+	public String upload(@RequestParam("upload_file") MultipartFile multipartFile, Model model) throws IOException {
+
+		/*
+		 * 一時的にここにパスを書く。設定クラスを作り値を登録していく。Singleton。また、既存の設定ファイルの使い方など。
+		 */
+		Path path = Paths.get("\\Users\\owner\\RsysData");
+		if(!Files.exists(path)) {
+			Files.createDirectory(path);
+		}
+
+		System.out.println(path.toString());
+
+		/*
+		 * 拡張子を取得し、日時をベースに変更したファイル名に設定する。
+		 */
+		int dot = multipartFile.getOriginalFilename().lastIndexOf(".");
+		String extension = "";
+		if(dot > 0) {
+			//dot以降の拡張子名を取得する
+			extension = multipartFile.getOriginalFilename().substring(dot).toLowerCase();
+		}
+		// 拡張子がない、拡張子が.csvでない場合、扱わない。
+		if(dot <= 0 || !extension.equals(".csv")) {
+			return tplRoot + "list";
+		}
+		String filename = DateTimeFormatter.ofPattern("yyyyMMddmmss").format(LocalDateTime.now());
+		Path uploadfile = path.resolve(filename + extension);
+
+		try(OutputStream os = Files.newOutputStream(uploadfile, StandardOpenOption.CREATE)) {
+			os.write(multipartFile.getBytes());
+		}
+
+		model.addAttribute("users", userService.findAll());
+		return tplRoot + "list";
 	}
 
 	@PostMapping("deleteConfirm")

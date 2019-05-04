@@ -4,11 +4,16 @@
 <body>
 <nav th:fragment="nav(flag)">
     <div>
+    	Admin
     	<a th:href="@{/admin}">Entrance</a>
-    	<a th:href="@{/admin/user/input}">Add User</a>
-    	<a th:href="@{/admin/user/list}">User List</a>
-    	<a th:href="@{/admin/shift}">Shift List</a>
-    	<a th:href="@{/admin/schedule}">Schedule List</a>
+    	User
+    	<a th:href="@{/admin/user/input}">Add</a>
+    	<a th:href="@{/admin/user/list}">List</a>
+    	Shift
+    	<a th:href="@{/admin/shift}">List</a>
+    	Schedule
+    	<a th:href="@{/admin/schedule}">Top</a>
+    	<a th:href="@{/admin/schedule/list}">List</a>
     </div>
 </nav>
 </body>
