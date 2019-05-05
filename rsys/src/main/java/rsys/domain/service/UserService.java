@@ -6,6 +6,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -127,14 +130,22 @@ public class UserService {
 	/*
 	 * データベースのユーザー一覧をCSV形式でファイルに書き込む
 	 */
-	public void createUserCsvFile(Path path, Charset cs, OpenOption... options)  {
+	public void createUserCsvFile(Path path, Charset cs)  {
 		List<User> list = findAll();
-		try(BufferedWriter bw = Files.newBufferedWriter(path, cs, options)){
+		String filename = DateTimeFormatter.ofPattern("yyyyMMddmmss").format(LocalDateTime.now());
+		path = path.resolve(filename + ".csv");
+
+		OpenOption options = StandardOpenOption.APPEND;
+		if(!Files.exists(path)) options = StandardOpenOption.CREATE;
+
+		try(BufferedWriter bw = Files.newBufferedWriter(path, options)){
 			for(User u : list) {
 				bw.write(u.toCsvString());
 				bw.newLine();
 			}
+			bw.flush();
 		}catch(IOException e) {
+			System.out.println("createUserCsvFile");
 			e.printStackTrace();
 		}
 	}
@@ -146,9 +157,9 @@ public class UserService {
 	public void insertFromUserCsvFile(Path path, Charset cs) {
 		try(Stream<String> stream = Files.lines(path, cs)){
 			stream.forEach(str->{
-				String[] line = str.split(",");
-				for(String s : line) {
-					String[] spl = s.split(",");
+				System.out.println(str);
+				String[] spl = str.split(",");
+				if(spl.length == 8) {
 					insertOne(User.of(Integer.parseInt(spl[0]), //id
 							spl[1], //firstName
 							spl[2], //lastName

@@ -61,18 +61,22 @@ public class User {
 		return id + "," + firstName + "," + lastName + "," + email + "," + password + "," + sectionName + "," + salary + "," + roleName;
 	}
 
-	public static User of(Integer id, @NotNull @Size(min = 2, max = 30) String password,
-			@NotNull @Size(min = 2, max = 30) String firstName, @NotNull @Size(min = 2, max = 30) String lastName,
-			@NotNull @Email @Size(min = 2, max = 30) String email, @NotNull SectionName sectionName,
+	public static User of(Integer id, @NotNull @Size(min = 2, max = 30) String firstName,
+			@NotNull @Size(min = 2, max = 30) String lastName,
+			@NotNull @Email @Size(min = 2, max = 30) String email,
+			@NotNull @Size(min = 2, max = 30) String password,
+			@NotNull SectionName sectionName,
 			@NotNull @Min(150000) Long salary, RoleName roleName)  {
 		return new User(id, firstName, lastName, email, password, sectionName, salary, roleName);
 	}
 
 	public User() {}
 
-	public User(Integer id, @NotNull @Size(min = 2, max = 30) String password,
-			@NotNull @Size(min = 2, max = 30) String firstName, @NotNull @Size(min = 2, max = 30) String lastName,
-			@NotNull @Email @Size(min = 2, max = 30) String email, @NotNull SectionName sectionName,
+	public User(Integer id, @NotNull @Size(min = 2, max = 30) String firstName,
+			@NotNull @Size(min = 2, max = 30) String lastName,
+			@NotNull @Email @Size(min = 2, max = 30) String email,
+			@NotNull @Size(min = 2, max = 30) String password,
+			@NotNull SectionName sectionName,
 			@NotNull @Min(150000) Long salary, RoleName roleName) {
 		super();
 		this.id = id;

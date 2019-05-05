@@ -42,8 +42,8 @@ public class UserCSV {
 	private Integer regionCode;
 
 	@CsvBindByName(column = "電話番号", required = true)
-	private Integer phoneNumber;
+	private String phoneNumber;
 
 	@CsvBindByName(column = "携帯", required = true)
-	private Integer portablePhoneNumber;
+	private String portablePhoneNumber;
 }

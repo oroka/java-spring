@@ -1,7 +1,12 @@
 package rsys.app.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,9 +17,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +37,7 @@ import rsys.domain.model.SectionName;
 import rsys.domain.model.User;
 import rsys.domain.model.converter.ClassConverter;
 import rsys.domain.model.form.UserInputForm;
+import rsys.domain.service.UserCsvService;
 import rsys.domain.service.UserService;
 
 /*
@@ -40,10 +48,17 @@ import rsys.domain.service.UserService;
 @Controller
 @RequestMapping("admin/user")
 public class UserController {
+
 	@Autowired
 	UserService userService;
 
-	private final String tplRoot = "admin/user/";
+	@Autowired
+	UserCsvService userCsvService;
+
+	@Autowired
+	ResourceLoader resourceLoader;
+
+	private final String tplRoot = "/admin/user/";
 
 	@GetMapping("list")
 	public String viewAll(Model model) {
@@ -103,9 +118,66 @@ public class UserController {
 	 * 仕様：ファイルからデータベースを更新する
 	 * 手順：ファイルの選択->ファイルからデータベース更新
 	 * 前提条件：ファイルのアップロード
-	 *
 	 */
+	@GetMapping("file/insert")
+	public String insertCsvFile(Model model, @RequestParam("path") String path) {
 
+		userService.insertFromUserCsvFile(Paths.get("\\Users\\owner\\RsysData").resolve(path), StandardCharsets.UTF_8);
+
+		return "redirect:" + tplRoot + "list";
+	}
+
+	/*
+	 * 仕様：データベースの情報をCSVファイルへ変換
+	 */
+	@PostMapping("file/create")
+	public String createCsvFile(Model model) {
+
+		Path path = Paths.get("\\Users\\owner\\RsysData");
+		//path = path.resolve("abc");
+		userService.createUserCsvFile(path, StandardCharsets.UTF_8);
+
+		/*
+		OpenOption oo = StandardOpenOption.APPEND;
+		if(!Files.exists(path)) oo = StandardOpenOption.CREATE;
+		try(OutputStream os = Files.newOutputStream(path, oo)){
+
+		}catch(IOException e) {
+			System.out.println("createUserCsvFile");
+			e.printStackTrace();
+		}
+		*/
+
+		return "redirect:" + tplRoot + "file/list";
+	}
+
+	/*
+	 * 仕様：Csvファイルをダウンロードする
+	 */
+	@PostMapping("file/download")
+	public String download(HttpServletResponse response, @RequestParam("download_file") String download_file, Model model) throws IOException {
+		Path path = Paths.get("\\Users\\owner\\RsysData");
+		path = path.resolve(download_file);
+
+		byte[] fileContent = null;
+		fileContent = StreamToByte(path);
+
+		if(fileContent == null) return "redirect:" + tplRoot + "file/list";
+
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment; filename=" + path.getFileName());
+		response.setContentLength(fileContent.length);
+
+		try(OutputStream os = response.getOutputStream()){
+    	   os.write(fileContent);
+    	   os.flush();
+		} catch (FileNotFoundException e) {
+    	   e.getStackTrace();
+		}
+
+		//model.addAttribute("users", userService.findAll());
+		return "redirect:" + tplRoot + "file/list";
+	}
 
 	/*
 	 * UserCSVファイルの一覧を表示
@@ -123,7 +195,7 @@ public class UserController {
 	 * 仕様：アップロードされたファイルを保存する
 	 * フォルダ：Users\owner\RsysData
 	 */
-	@PostMapping("upload")
+	@PostMapping("file/upload")
 	public String upload(@RequestParam("upload_file") MultipartFile multipartFile, Model model) throws IOException {
 
 		/*
@@ -134,7 +206,7 @@ public class UserController {
 			Files.createDirectory(path);
 		}
 
-		System.out.println(path.toString());
+		//System.out.println(path.toString());
 
 		/*
 		 * 拡張子を取得し、日時をベースに変更したファイル名に設定する。
@@ -147,7 +219,7 @@ public class UserController {
 		}
 		// 拡張子がない、拡張子が.csvでない場合、扱わない。
 		if(dot <= 0 || !extension.equals(".csv")) {
-			return tplRoot + "list";
+			return "redirect:" + tplRoot + "file/list";
 		}
 		String filename = DateTimeFormatter.ofPattern("yyyyMMddmmss").format(LocalDateTime.now());
 		Path uploadfile = path.resolve(filename + extension);
@@ -157,7 +229,7 @@ public class UserController {
 		}
 
 		model.addAttribute("users", userService.findAll());
-		return tplRoot + "list";
+		return "redirect:" + tplRoot + "file/list";
 	}
 
 	@PostMapping("deleteConfirm")
@@ -174,5 +246,33 @@ public class UserController {
 
 		model.addAttribute("users", userService.findAll());
 		return tplRoot + "list";
+	}
+
+	/*
+	 * InputStream To byte[]
+	 */
+	private byte[] StreamToByte(Path path) {
+
+		int nRead;
+		byte[] fileContent = new byte[6666];
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+		try(InputStream is = new FileInputStream(path.toString())){
+			while((nRead = is.read(fileContent, 0, fileContent.length)) != -1) {
+				buffer.write(fileContent, 0, nRead);
+			}
+			buffer.flush();
+
+			return buffer.toByteArray();
+
+		} catch (FileNotFoundException e) {
+			// TODO
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

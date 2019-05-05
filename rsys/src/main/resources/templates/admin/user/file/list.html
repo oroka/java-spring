@@ -7,12 +7,23 @@
 <body>
 	<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
 	<h3>User CSV File List</h3>
-	<ul>
-		<li th:each="l, stat : ${list}" th:text="${l}"></li>
-	</ul>
-	<form action="/admin/user/upload" th:action="@{/admin/user/upload}" method="post" enctype="multipart/form-data">
+	<table>
+		<tr th:each="l, stat : ${list}">
+			<td><a th:href="@{/admin/user/file/insert(path=${l})}" th:text="${l}"></a></td>
+			<td><form action="/admin/user/file/download" th:action="@{/admin/user/file/download}" method="post">
+		        <input type="hidden" th:name="download_file" th:value="${l}"/>
+		        <button type="submit">download</button>
+		    </form></td>
+		</tr>
+	</table>
+	<br>
+	<form action="/admin/user/file/upload" th:action="@{/admin/user/file/upload}" method="post" enctype="multipart/form-data">
         <input type="file" th:name="upload_file" /><br />
         <button type="submit">upload</button>
+    </form>
+    <br>
+    <form action="/admin/user/file/create" th:action="@{/admin/user/file/create}" method="post" enctype="multipart/form-data">
+        <button type="submit">create</button>
     </form>
 </body>
 </html>
