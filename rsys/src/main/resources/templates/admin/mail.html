@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_header :: header(~{::title})">
+	<meta charset="UTF-8"/>
+	<title>Mail Form</title>
+</head>
+<body>
+<th:block th:replace="admin/_nav :: nav(Home)"></th:block>
+<h3>Mail Form</h3>
+
+<form action="/admin/mail/send" th:action="@{/admin/mail/send}" method="post" th:object="${mailInputForm}">
+	 <div>
+		<label for="name">To:</label>
+		<input type="email" id="to" name="to" th:field="*{to}">
+	 </div>
+	 <div>
+	 	<label>Select users whom you want to mail</label><br>
+		<select id="multiSelect" name="selectedItems" multiple="multiple" size="6">
+			<option value="">---</option>
+			<option th:each="item : ${list}" th:value="${item.email}" th:text="${item.id + ' ' + item.firstName}" th:field="*{selectedItems}">multiSelect</option>
+		</select>
+	 </div>
+	 <div>
+		<label for="msg">Subject:</label>
+		<textarea id="msg" name="subject"></textarea>
+	 </div>
+	 <div>
+		<label for="msg">Message:</label>
+		<textarea id="msg" name="text"></textarea>
+	 </div>
+	<br>
+	<button type="submit">submit</button>
+</form>
+
+</body>
+</html>
