@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")//ADMINしか入れない
+                .antMatchers("/admin","/admin/**").hasRole("ADMIN")//ADMINしか入れない
                 .antMatchers("/**").hasRole("USER")//USERしか入れない -> ADMINの場合、ADMINとUSERの両方を設定する UserDetailsのgetAuthorities()
                 .and()
             .formLogin()

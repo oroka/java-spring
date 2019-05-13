@@ -29,6 +29,7 @@ public class ShiftService {
 	}
 
 	public Shift findOneById(Integer id) {
+		System.out.println("ShiftService - findOneById " + id);
 		Optional<Shift> shift = shiftRepository.findById(id);
 		if(shift.isPresent()) return shift.get();
 		return null;

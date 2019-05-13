@@ -42,8 +42,11 @@ public class ShiftController {
 
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
 	public String edit(Model model, Integer id) {
+		System.out.println(id);
 		model.addAttribute("shift", shiftService.findOneById(id));
+		System.out.println(id);
 		model.addAttribute("entities", shiftService.findAll());
+		System.out.println(id);
 		return tplRoot + "manage";
 	}
 
